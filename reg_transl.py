@@ -32,6 +32,18 @@ def printNets():
 		except:
 			break
 
+
+# Create an instance of mechanize browser
+# Open the wigle.net page
+# encode username and password as parameteres and request 
+# a login at the Wigle login page
+# Once logged in, creates an HTTP post using parameter 
+# the parameter netid as the MAC address to search the 
+# database
+
+import mechanize, urllib, re, urlparse
+
+
 def main():
 	printNets()
 if __name__ == "__main__":
