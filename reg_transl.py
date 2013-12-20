@@ -16,8 +16,8 @@ from python-registry import *
 import sys
 from Registry import Registry
 
-# from _winreg import *
-# Does not work in Linux
+from _winreg import *
+# _winreg only useful running on PC natively.  Will throw error in non-Windows environment,
 
 # Prints all keys in a Registry
 
@@ -27,25 +27,24 @@ def rec(key, depth=0):
 		rec(subkey, depth + 1)
 
 def printNets(reg = ""):
-	# NOTE: below is code for _winreg module
-	# net = "SOFTWARE\Microsoft\Windows NT\Current Version"+\
-	# 	"\NetworkList\Signatures]Unmanaged"
-	# key = OpenKey(HKEY_LOCAL_MACHINE.net)
-	# print "\n[*] Networks You have Joined."
-	# for i in range(100):
-	# 	try:
-	# 		guid = EnumKey(key, i)
-	# 		netKey = OpenKey(key, str(guid))
-	# 		(n, adrr, t) = EnumValue(netKey, 5)
-	# 		(n, name, t) = EnumValue(netKey, 4)
-	# 		macAddr = val2addr(addr)
-	# 		netName = str(name)
-	# 		print '[+]' + netName + ' ' + macAddr
-	# 		CloseKet(netKey)
-	# 	except:
-	# 		break
-	reg = Registry.Registry(reg || "SOFTWARE\Microsoft\Windows NT\Current Version"+\
-	"\NetworkList\Signatures]Unmanaged")
+	net = "SOFTWARE\Microsoft\Windows NT\Current Version"+\
+		"\NetworkList\Signatures]Unmanaged"
+	key = OpenKey(HKEY_LOCAL_MACHINE.net)
+	print "\n[*] Networks You have Joined."
+	for i in range(100):
+		try:
+			guid = EnumKey(key, i)
+			netKey = OpenKey(key, str(guid))
+			(n, adrr, t) = EnumValue(netKey, 5)
+			(n, name, t) = EnumValue(netKey, 4)
+			macAddr = val2addr(addr)
+			netName = str(name)
+			print '[+]' + netName + ' ' + macAddr
+			CloseKet(netKey)
+		except:
+			break
+	# reg = Registry.Registry(reg || "SOFTWARE\Microsoft\Windows NT\Current Version"+\
+	# "\NetworkList\Signatures]Unmanaged")
 
 	rec(reg.root())
 
