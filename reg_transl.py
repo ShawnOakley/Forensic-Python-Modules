@@ -12,11 +12,11 @@ def val2addr(val):
 
 # NOTE: Relies on python-registry
 
-from python-registry import *
+# from python-registry import *
 import sys
-from Registry import Registry
+# from Registry import Registry
 
-from _winreg import *
+import winreg_unicode as winreg
 # _winreg only useful running on PC natively.  Will throw error in non-Windows environment,
 
 # Prints all keys in a Registry
@@ -27,22 +27,20 @@ def rec(key, depth=0):
 		rec(subkey, depth + 1)
 
 def printNets(reg = ""):
-	net = "SOFTWARE\Microsoft\Windows NT\Current Version"+\
-		"\NetworkList\Signatures]Unmanaged"
-	key = OpenKey(HKEY_LOCAL_MACHINE.net)
-	print "\n[*] Networks You have Joined."
-	for i in range(100):
-		try:
-			guid = EnumKey(key, i)
-			netKey = OpenKey(key, str(guid))
-			(n, adrr, t) = EnumValue(netKey, 5)
-			(n, name, t) = EnumValue(netKey, 4)
-			macAddr = val2addr(addr)
-			netName = str(name)
-			print '[+]' + netName + ' ' + macAddr
-			CloseKet(netKey)
-		except:
-			break
+	net = "Network"
+	with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, net) as key:
+		print "\n[*] Networks You have Joined."
+		for i in range(100):
+			try:
+				guid = winreg.EnumKey(key, i)
+				with winreg.OpenKey(key, str(guid)) as netKey:
+					(n, adrr, t) = winreg.EnumValue(netKey, 5)
+					(n, name, t) = winreg.EnumValue(netKey, 4)
+					macAddr = val2addr(addr)
+					netName = str(name)
+					print '[+]' + netName + ' ' + macAddr
+			except:
+				break
 	# reg = Registry.Registry(reg || "SOFTWARE\Microsoft\Windows NT\Current Version"+\
 	# "\NetworkList\Signatures]Unmanaged")
 
@@ -60,7 +58,7 @@ def printNets(reg = ""):
 # the parameter netid as the MAC address to search the 
 # database
 
-import mechanize, urllib, re, urlparse
+# import mechanize, urllib, re, urlparse
 
 
 def main():
