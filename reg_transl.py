@@ -10,15 +10,10 @@ def val2addr(val):
 # Grabs key from Windows registry, loops through extracting
 # network name and DefaultGatewayMAC
 
-# NOTE: Relies on python-registry
-
 # from python-registry import *
 import sys
 # from Registry import Registry
-
 from winreg import *
-# _winreg only useful running on PC natively.  Will throw error in non-Windows environment,
-
 # Prints all keys in a Registry
 
 def rec(key, depth=0):
