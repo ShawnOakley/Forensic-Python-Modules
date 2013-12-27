@@ -1,4 +1,6 @@
-# Converts REG_BINARY values to a string MAC address
+# Converts REG_BINARY values to a string MAC address in Windows 7
+# Resources: http://support.microsoft.com/kb/147797
+# http://www.irongeek.com/i.php?page=security/windows-forensics-registry-and-file-system-spots
 
 def val2addr(val):
 	addr = ""
